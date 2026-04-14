@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <title>Alignd</title>
+  <desc>Alignd app icon — a document with a match checkmark</desc>
+
+  <!-- Background rounded square -->
+  <rect x="0" y="0" width="100" height="100" rx="22" fill="#534AB7"/>
+
+  <!-- White document -->
+  <rect x="18" y="14" width="56" height="68" rx="6" fill="#ffffff"/>
+
+  <!-- Document lines -->
+  <line x1="28" y1="30" x2="72" y2="30" stroke="#534AB7" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="28" y1="42" x2="72" y2="42" stroke="#534AB7" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="28" y1="54" x2="54" y2="54" stroke="#534AB7" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- Check circle -->
+  <circle cx="68" cy="68" r="14" fill="#7F77DD"/>
+  <polyline points="61,68 66,74 76,61" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

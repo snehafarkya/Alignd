@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "lib/api.js", "app/page.jsx"  ],
   "exclude": ["node_modules"]
 }
