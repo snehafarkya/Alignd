@@ -134,7 +134,7 @@ export default function Home() {
       <div className="max-w-4xl mx-auto mb-10">
         <h1 className="text-4xl flex items-center gap-3 font-bold tracking-tight">
           <Image src="/alignd-icon.svg" width={40} height={40} alt="Alignd" />
-          AI Resume Matcher & Cover Letter Generator
+          AI Resume Analyzer & Cover Letter Generator
         </h1>
         <p className="text-zinc-400 mt-2">
           Know if you should apply, how to improve instantly, and get a tailored
