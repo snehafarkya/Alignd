@@ -1,4 +1,5 @@
-import  pdf from "pdf-parse-new";
+import  pdf from "pdf-parse";
+export const runtime = "nodejs";
 
 export async function POST(req) {
   try {
@@ -39,7 +40,11 @@ Rules:
 - Sound and look human
 - no double dash or informal words to be used
 - Be concise (200–300 words)
+- Must include company name and role name in the cover letter
+- make sure to end the cover letter like a standard one with a call to action and a thank you note.
+- Contact info and likedin posrtfolio or github if available, should be included in the cover letter if mentioned in the resume.
 
+Here is the job description and resume. Write a cover letter for this job based on the resume. If the resume doesn't have relevant experience, write a cover letter that focuses on transferable skills and enthusiasm for the role.
 Resume:
 ${resumeText}
 

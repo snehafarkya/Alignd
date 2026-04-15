@@ -1,4 +1,5 @@
-import pdf from "pdf-parse-new";
+import pdf from "pdf-parse";
+export const runtime = "nodejs";
 
 export async function POST(req) {
   try {
@@ -30,24 +31,72 @@ export async function POST(req) {
 
     // 🧠 AI PROMPT
  const prompt = `
-You are:
-- A strict ATS system
-- A hiring manager
-- A career strategist
-
-Your job:
-Evaluate whether this candidate should APPLY or SKIP the job.
+You are an ATS + hiring manager.
 
 IMPORTANT:
-- Be realistic, not optimistic
-- Do NOT invent fake precision
-- Avoid guessing timelines or ranking numbers
+Even if the candidate is NOT a good fit (SKIP),
+you MUST still provide meaningful, detailed, and useful output.
+
+----------------------------------------
+MANDATORY OUTPUT RULES
+----------------------------------------
+- NEVER leave any field empty
+- ALWAYS provide at least:
+  - 3 reasons
+  - all missing skills
+  - 3 improvement steps
+- Even for "skip", give constructive, actionable insights
+- DO NOT return placeholders or vague answers
+----------------------------------------
+EXPERIENCE MATCH (STRICT RULE)
+----------------------------------------
+
+1. Extract required experience in years from the job description.
+   - Example: "1+ years", "2 years", "3-5 years"
+
+2. Extract candidate's total relevant experience in years from the resume.
+
+3. Compute experience ratio:
+
+experience_ratio = candidate_experience / required_experience
+
+4. Compute base score:
+
+IF experience_ratio >= 1:
+  base_experience_score = 100
+ELSE:
+  base_experience_score = experience_ratio * 100
+
+5. Adjust for relevance:
+- If experience is highly relevant → keep score
+- If partially relevant → reduce by 10–30%
+- If mostly irrelevant → reduce by 40–60%
+
+6. Final experience_match = rounded integer (0–100)
+
+IMPORTANT:
+- Do NOT reward excessive years beyond requirement (cap at 100)
+- Do NOT assume experience if not clearly mentioned
+- Be conservative and realistic
+
+----------------------------------------
+FINAL MATCH SCORE
+----------------------------------------
+
+match_score =
+(skills_match * 0.5) +
+(experience_match * 0.3) +
+(keyword_match * 0.2)
+
+ROUND to nearest integer
 
 Return ONLY JSON:
 
 {
   "decision": "apply" | "skip",
   "match_score": number (0-100),
+   "confidence": number(0-100),
+  "ats_risk": "low" | "medium" | "high",
   "breakdown": {
     "skills_match": number,
     "experience_match": number,
@@ -57,7 +106,8 @@ Return ONLY JSON:
   "reasons": [],
   "missing_skills": [],
   "recruiter_pov": "",
-  "improvement_plan": []
+  "improvement_plan": [],
+    "harsh_truth": "One brutally honest but helpful sentence"
 }
 
 Rules:

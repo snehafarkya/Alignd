@@ -123,12 +123,12 @@ export default function Home() {
       {/* HEADER */}
       <div className="max-w-4xl mx-auto mb-10">
         <h1 className="text-4xl flex items-center gap-3 font-bold tracking-tight">
-        <Image src="/alignd-icon.svg" width={40} height={40} alt="Alignd" />
-
+          <Image src="/alignd-icon.svg" width={40} height={40} alt="Alignd" />
           AI Resume Matcher & Cover Letter Generator
         </h1>
         <p className="text-zinc-400 mt-2">
-          Know if you should apply, how to improve instantly, and get a tailored cover letter in seconds.
+          Know if you should apply, how to improve instantly, and get a tailored
+          cover letter in seconds.
         </p>
       </div>
 
@@ -167,31 +167,40 @@ export default function Home() {
       {/* RESULTS */}
       {result && (
         <div className="max-w-4xl mx-auto mt-10 space-y-6">
-          {/* DECISION */}
-          <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
+          {/* ================= DECISION ================= */}
+          <div
+            className="
+      p-6 rounded-2xl
+      bg-white border border-zinc-200
+      dark:bg-zinc-900 dark:border-zinc-800
+    "
+          >
             <h2 className="text-3xl font-bold">
               {result.decision === "apply" ? "✅ APPLY" : "❌ SKIP"}
             </h2>
 
-            <p className="text-zinc-400 mt-2">
-              Match Score: {result.match_score}%
-            </p>
+            <div className="mt-2 text-sm text-zinc-600 dark:text-zinc-400 flex gap-4 flex-wrap">
+              <span>Match Score: {result.match_score}%</span>
+              <span>Confidence: {result.confidence}%</span>
+              <span className="capitalize">ATS Risk: {result.ats_risk}</span>
+            </div>
 
             {/* Breakdown */}
-            <div className="mt-4 text-sm text-zinc-300 space-y-1">
+            <div className="mt-4 text-sm text-zinc-700 dark:text-zinc-300 space-y-1">
               <p>Skills Match: {result.breakdown?.skills_match}%</p>
               <p>Experience Match: {result.breakdown?.experience_match}%</p>
               <p>Keyword Match: {result.breakdown?.keyword_match}%</p>
             </div>
 
-            <ul className="mt-4 list-disc ml-6 text-zinc-300">
+            {/* Reasons */}
+            <ul className="mt-4 list-disc ml-6 text-zinc-700 dark:text-zinc-300">
               {result.reasons?.map((r, i) => (
                 <li key={i}>{r}</li>
               ))}
             </ul>
           </div>
 
-          {/* GRID */}
+          {/* ================= GRID ================= */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* Competitiveness */}
             <Card title="Competitiveness">
@@ -222,7 +231,47 @@ export default function Home() {
             </Card>
           </div>
 
-          {/* DISCLAIMER */}
+          {/* ================= QUICK FIXES ================= */}
+          {result.quick_fixes?.length > 0 && (
+            <div
+              className="
+        p-5 rounded-2xl
+        bg-green-50 border border-green-200
+        dark:bg-green-900/20 dark:border-green-800
+      "
+            >
+              <h3 className="font-semibold mb-2 text-green-700 dark:text-green-400">
+                Quick Fixes (High Impact)
+              </h3>
+
+              <ul className="list-disc ml-4 text-green-700 dark:text-green-300">
+                {result.quick_fixes.map((fix, i) => (
+                  <li key={i}>{fix}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* ================= HARSH TRUTH ================= */}
+          {result.harsh_truth && (
+            <div
+              className="
+        p-5 rounded-2xl
+        bg-red-50 border border-red-200
+        dark:bg-red-900/20 dark:border-red-800
+      "
+            >
+              <h3 className="font-semibold mb-2 text-red-700 dark:text-red-400">
+                Reality Check
+              </h3>
+
+              <p className="text-red-700 dark:text-red-300">
+                {result.harsh_truth}
+              </p>
+            </div>
+          )}
+
+          {/* ================= DISCLAIMER ================= */}
           <p className="text-xs text-zinc-500 mt-4">
             These insights are AI-assisted estimates based on resume-job
             alignment. Actual hiring decisions depend on recruiter preferences
@@ -232,8 +281,10 @@ export default function Home() {
       )}
       {/* COVER LETTER */}
       {coverLetter && (
-        <div className="max-w-4xl mx-auto mt-10 p-6 bg-white border-zinc-200 text-zinc-700
-dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300 rounded-2xl">
+        <div
+          className="max-w-4xl mx-auto mt-10 p-6 bg-white border-zinc-200 text-zinc-700
+dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300 rounded-2xl"
+        >
           <div className="flex justify-between items-center">
             <h3 className="text-xl font-semibold">Cover Letter</h3>
 
@@ -267,18 +318,16 @@ dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300 rounded-2xl">
 // Reusable Card
 function Card({ title, children }) {
   return (
-    <div className="
+    <div
+      className="
       p-5 rounded-2xl
       bg-white border border-zinc-200
       dark:bg-zinc-900 dark:border-zinc-800
-    ">
-      <h3 className="font-semibold mb-2 text-black dark:text-white">
-        {title}
-      </h3>
+    "
+    >
+      <h3 className="font-semibold mb-2 text-black dark:text-white">{title}</h3>
 
-      <div className="text-zinc-700 dark:text-zinc-300">
-        {children}
-      </div>
+      <div className="text-zinc-700 dark:text-zinc-300">{children}</div>
     </div>
   );
 }
