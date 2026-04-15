@@ -30,7 +30,17 @@ export default function Home() {
     setResult(null);
 
     const res = await analyzeResume(file, job);
-    setResult(res);
+
+    // The API returns { result: "...raw JSON string..." }
+    // We need to parse the inner string
+    try {
+      const raw = res.result || res; // handle both shapes
+      const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+      setResult(parsed);
+    } catch (e) {
+      console.error("Failed to parse AI response:", e);
+      alert("Something went wrong parsing the result.");
+    }
 
     setLoading(false);
   };
